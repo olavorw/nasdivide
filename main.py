@@ -25,7 +25,7 @@ def create_nas_user():
 def setup_encrypted_drive():
     # List drives
     run("lsblk")
-    drive = input("Drive to use (e.g., sda): ")
+    drive = input("Drive to use (e.g., sda) (do not include '/dev/'!!!): ")
     
     if not input(f"⚠️  DESTROY /dev/{drive}? [yes]: ") == "yes":
         sys.exit("Aborted")
@@ -107,8 +107,9 @@ if __name__ == "__main__":
     if os.geteuid() != 0:
         sys.exit("Need root")
     
-    create_nas_user()
     setup_encrypted_drive()
+    create_nas_user()
+
     setup_syncthing()
     create_backup_script()
     setup_systemd()
